@@ -1,0 +1,22 @@
+Terminologies:
+- SS: Subject Systems
+- SS_all: all SS are combined into one file
+- scored: subjects' data has been annotated by GPT-4
+- scoring: GPT-4 annotating subjects' data
+- assessed: subjects' data has been predicted by the assessor
+- phase1: all procedures from running the subjects until being assessed by the assessor.
+- phase2: all procedures from re-running the subjects with assessor's feedback/predictions to evaluating the final performance of the subjects.
+
+Further details about phase1 and phase2:
+
+PHASE1:
+1.1. Run Subject Systems (SS) on open-ended TruthfulQA data, taking the question as input.
+1.2. Use GPT-4 to annotate SS’s responses, given the (question, response, list of correct answers, list of incorrect answers). 
+1.3. Train assessors (pre/post-) on the resultant data by giving an estimated probability of success to each data instance. With Stratified K-Fold data (like CV) in which different combinationsof (K-1) and 1 folds of train and test data will be experimented with K iterations. Note: this is not CV as we're not performing any hyperparameter selection and such operation would be expensive (time + API cost).
+1.4. The assessor is annotating failures to those instances that are predictably incorrect and such data will be provided as feedback to re-run the subjects.
+
+
+PHASE2:
+2.1. Ask SS to re-answer those instances that are predictably wrong, with this feedback (+ Prompt Engineering).
+2.2. Use GPT-4 to annotate the SS’s responses, again.
+2.3. Finally, measure the SS’s performance (e.g., ACC) to observe improvements.
